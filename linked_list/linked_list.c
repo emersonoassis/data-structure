@@ -5,7 +5,7 @@
 
 struct linkedList
 {
-    int info;
+    int data;
     struct linkedList* next;
 };
 
@@ -17,18 +17,22 @@ LinkedList* create_list(){
 LinkedList* add(LinkedList* list, int item) {
     LinkedList* new = (LinkedList*) malloc(sizeof(LinkedList));
 
-    new->info = item;
+    new->data = item;
     new->next = list;
     return new;
 }
 
-void print_data(LinkedList* list) {
+void print_chain(LinkedList* list) {
     LinkedList* aux;
 
     for(aux = list; aux != NULL; aux = aux->next) {
-        printf("%d\n", aux->info);
+        printf("%d - %p\n", aux->data, aux->next);
     }
     return;
+}
+
+void print_item(LinkedList* list) {
+     printf("%d - %p\n", list->data, list->next);
 }
 
 int is_empty(LinkedList* list) {
@@ -41,40 +45,35 @@ int is_empty(LinkedList* list) {
 
 LinkedList* search(LinkedList* list, int value) {
 
-    LinkedList* p;
-
-    for(p = list; p != NULL; p = p->next) {
-        if(p->info == value) {
-            return p;
-        }
-
-        return NULL;
+    if(list == NULL || list->data == value) {
+        return list;
     }
+
+    search(list->next, value);
 
 }
 
-LinkedList* remove_item(LinkedList* list, int value) {
+void remove_item(LinkedList* list, int value) {
 
-    LinkedList* prev = NULL;
-    LinkedList* p;
-
-    for(p = list; p->info != value; p = p->next) {
-
-        if(p == NULL) {
-            return list;
-        }
-
-        prev = p;
+    if(list == NULL) {
+        return;
     }
 
-    if(prev == NULL) {
-        list = p->next;
-    } else {
-        prev->next = p->next;
+    LinkedList* next_node = list->next;
+
+    if(list->data == value) {
+        list->data = next_node->data;
+        list->next = next_node->next;
+        free(next_node);
+        return;
     }
 
-    free(p);
-
-    return list;
-
+    if(next_node->data == value) {
+        list->next = next_node->next;
+        free(next_node);
+        return ;
+    }
+    
+    remove_item(list->next, value);
+    
 }

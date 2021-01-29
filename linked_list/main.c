@@ -10,14 +10,17 @@ int main() {
 
     list = create_list();
 
-    print_list_status(list);
-
-    list = add(list, 10);
+    list = add(list, 50);
+    list = add(list, 40);
+    list = add(list, 30);
     list = add(list, 20);
-     
-     print_list_status(list);
+    list = add(list, 10);
 
-    //print_data(list);
+    print_chain(list);
+
+    remove_item(list, 10);
+
+    print_chain(list);
 
     return 0;
 }
