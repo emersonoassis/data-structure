@@ -26,7 +26,7 @@ void print_chain(LinkedList* list) {
     LinkedList* aux;
 
     for(aux = list; aux != NULL; aux = aux->next) {
-        printf("%d - %p\n", aux->data, aux->next);
+        printf("%d - %p (%p)\n", aux->data, aux->next, aux);
     }
     return;
 }
@@ -50,30 +50,31 @@ LinkedList* search(LinkedList* list, int value) {
     }
 
     search(list->next, value);
-
 }
 
-void remove_item(LinkedList* list, int value) {
+LinkedList* remove_item(LinkedList* list, int value) {
 
     if(list == NULL) {
-        return;
+        return list;
     }
 
     LinkedList* next_node = list->next;
 
     if(list->data == value) {
-        list->data = next_node->data;
-        list->next = next_node->next;
-        free(next_node);
-        return;
+        LinkedList* aux = list;
+        list = next_node;
+        free(aux);
+        return list;
     }
 
     if(next_node->data == value) {
         list->next = next_node->next;
         free(next_node);
-        return ;
+        return list;
     }
     
-    remove_item(list->next, value);
+    list->next = remove_item(list->next, value);
+
+    return list;
     
 }

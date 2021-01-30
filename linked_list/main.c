@@ -18,7 +18,7 @@ int main() {
 
     print_chain(list);
 
-    remove_item(list, 10);
+    list = remove_item(list, 12);
 
     print_chain(list);
 

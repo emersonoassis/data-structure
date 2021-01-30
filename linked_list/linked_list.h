@@ -6,4 +6,4 @@ void print_chain(LinkedList* list);
 void print_item(LinkedList* list);
 int is_empty();
 LinkedList* search(LinkedList* list, int value);
-void remove_item(LinkedList* list, int value);
+LinkedList* remove_item(LinkedList* list, int value);
